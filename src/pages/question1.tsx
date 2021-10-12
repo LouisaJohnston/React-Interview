@@ -17,9 +17,25 @@ import { Formik, Field, Form } from "formik";
 
 export default function Question1() {
   const [isSubmit, setIsSubmit] = useState(false);
+  const [newName, setNewName] = useState("");
+  const [newDate, setNewDate] = useState("");
+  const [newActive, setNewActive] = useState(false);
+  const [newAge, setNewAge] = useState(0);
+
+  const initialValues: any = {
+    name: "",
+    date: "",
+    active: "",
+    age: "",
+  };
+
   const handleSubmit = (values: any) => {
     setIsSubmit(true);
     console.log(values);
+    setNewName(values.name);
+    setNewDate(new Date(values.date).toLocaleDateString("en"));
+    setNewActive(values.active);
+    setNewAge(values.age);
   };
 
   return (
@@ -57,12 +73,8 @@ export default function Question1() {
           <ListItemText>Age (select from 1 to 70)</ListItemText>
         </ListItem>
       </List>
-      {isSubmit && <List></List>}
       <Paper style={{ width: "40vw", fontSize: "2em" }}>
-        <Formik
-          initialValues={{ name: "", date: "", active: "", age: "" }}
-          onSubmit={handleSubmit}
-        >
+        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           <Form style={{ display: "flex", flexDirection: "column" }}>
             <Field name="name" type="text" placeholder="Name" />
             <Field name="date" type="date" />
@@ -77,11 +89,27 @@ export default function Question1() {
               min="0"
               max="70"
               placeholder="Age"
-            />  
+            />
             <Button type="submit">Submit</Button>
           </Form>
         </Formik>
       </Paper>
+	  {isSubmit && (
+        <List>
+          <ListItem>
+            <ListItemText>Name: {newName}</ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemText>Date: {newDate}</ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemText>Active: {newActive}</ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemText>Age: {newAge}</ListItemText>
+          </ListItem>
+        </List>
+      )}
     </Container>
   );
 }
