@@ -15,3 +15,6 @@ CREATE TABLE something
 );
 
 -- create a trigger/function which will calculate the age on insert or modify given the birthday
+CREATE TRIGGER birthday_change
+    AFTER INSERT OR UPDATE OF birthday ON something
+    EXECUTE PROCEDURE AGE(timestamp, NEW.birthday);

@@ -11,31 +11,28 @@ import {
   Paper,
   FormControlLabel,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { Formik, Field, Form } from "formik";
 
 export default function Question1() {
-  const [isSubmit, setIsSubmit] = useState(false);
-  const [newName, setNewName] = useState("");
-  const [newDate, setNewDate] = useState("");
-  const [newActive, setNewActive] = useState(false);
-  const [newAge, setNewAge] = useState(0);
 
-  const initialValues: any = {
-    name: "",
-    date: "",
-    active: "",
-    age: "",
+  type FormValues = {
+    name: string;
+    date: string;
+    active: false;
+    age: 0;
   };
 
-  const handleSubmit = (values: any) => {
-    setIsSubmit(true);
-    console.log(values);
-    setNewName(values.name);
-    setNewDate(new Date(values.date).toLocaleDateString("en"));
-    setNewActive(values.active);
-    setNewAge(values.age);
+  const initialValues: FormValues = {
+    name: "",
+    date: new Date().toLocaleDateString("fr-CA"),
+    active: false,
+    age: 0,
+  };
+
+  const handleSubmit = (values: FormValues) => {
+	console.log(values)
   };
 
   return (
@@ -73,43 +70,61 @@ export default function Question1() {
           <ListItemText>Age (select from 1 to 70)</ListItemText>
         </ListItem>
       </List>
-      <Paper style={{ width: "40vw" }}>
+      <Paper>
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          <Form style={{ display: "flex", flexDirection: "column" }}>
-            <Field name="name" type="text" placeholder="Name" />
-            <Field name="date" type="date" />
+          <Form>
             <FormControlLabel
-              style={{ marginLeft: "0" }}
-              control={<Field name="active" type="checkbox" />}
-              label="Active"
+              control={
+                <Field style={{ marginLeft: "5px" }} name="date" type="date" />
+              }
+              label="Date:"
+              labelPlacement="start"
             />
-            <Field
-              name="age"
-              type="number"
-              min="0"
-              max="70"
-              placeholder="Age"
+            <FormControlLabel
+              style={{ marginLeft: "30px" }}
+              control={
+                <Field
+                  style={{ marginLeft: "5px" }}
+                  name="name"
+                  type="text"
+                  placeholder="Name"
+                />
+              }
+              label="Name:"
+              labelPlacement="start"
             />
-            <Button type="submit">Submit</Button>
+            <FormControlLabel
+              style={{ marginLeft: "30px" }}
+              control={
+                <Field
+                  style={{ marginLeft: "5px" }}
+                  name="active"
+                  type="checkbox"
+                />
+              }
+              label="Active:"
+              labelPlacement="start"
+            />
+            <FormControlLabel
+              style={{ marginLeft: "30px" }}
+              control={
+                <Field
+                  style={{ marginLeft: "5px" }}
+                  name="age"
+                  type="number"
+                  min="0"
+                  max="70"
+                />
+              }
+              label="Age:"
+              labelPlacement="start"
+            />
+            <Button style={{ marginLeft: "20px" }} type="submit">
+              Submit
+            </Button>
           </Form>
         </Formik>
       </Paper>
-	  {isSubmit && (
-        <List>
-          <ListItem>
-            <ListItemText>Name: {newName}</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemText>Date: {newDate}</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemText>Active: {newActive}</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemText>Age: {newAge}</ListItemText>
-          </ListItem>
-        </List>
-      )}
     </Container>
   );
 }
