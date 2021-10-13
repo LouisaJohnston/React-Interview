@@ -73,7 +73,7 @@ export default function Question1() {
           <ListItemText>Age (select from 1 to 70)</ListItemText>
         </ListItem>
       </List>
-      <Paper style={{ width: "40vw", fontSize: "2em" }}>
+      <Paper style={{ width: "40vw" }}>
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           <Form style={{ display: "flex", flexDirection: "column" }}>
             <Field name="name" type="text" placeholder="Name" />
